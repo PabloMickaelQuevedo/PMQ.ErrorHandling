@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/PMQ.ErrorHandling/PMQ.ErrorHandling.csproj" Id="59349139-dc37-445c-9f04-f6750a68f084" />
+  <Project Path="tests/PMQ.ErrorHandling.Test/PMQ.ErrorHandling.Test.csproj" Id="a615e249-ca94-48ee-856e-aa2a79bffc09" />
+</Solution>
