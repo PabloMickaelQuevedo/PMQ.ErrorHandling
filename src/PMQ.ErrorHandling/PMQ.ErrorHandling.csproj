@@ -4,6 +4,24 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>PMQ.ErrorHandling</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Pablo Mickael Quevedo</Authors>
+    <Company>Pablo Mickael Quevedo</Company>
+    <Product>PMQ.ErrorHandling</Product>
+    <Description>
+      A comprehensive error handling library for .NET applications, providing exception filters, notification mapping, model state validation, and centralized error response formatting for ASP.NET Core projects.
+    </Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/PabloMickaelQuevedo/PMQ.ErrorHandling</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PabloMickaelQuevedo/PMQ.ErrorHandling.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>error-handling;exception-handling;filters;validation;aspnetcore;notifications</PackageTags>
+    <IncludeLicenseFile>true</IncludeLicenseFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
