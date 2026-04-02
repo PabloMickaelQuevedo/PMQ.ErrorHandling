@@ -1,12 +1,3 @@
-/// <summary>
-/// Guide for extending error message localization to support additional languages.
-/// </summary>
-/// <remarks>
-/// <para>
-/// This file documents how to add support for new languages to the PMQ.ErrorHandling package.
-/// Currently, the package includes English and Portuguese (Brazil) localization.
-/// </para>
-/// </remarks>
 namespace PMQ.ErrorHandling.Localization
 {
     /*

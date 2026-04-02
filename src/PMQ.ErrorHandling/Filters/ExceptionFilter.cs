@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using PMQ.ErrorHandling.Constants;
 using PMQ.ErrorHandling.Helpers;
@@ -13,8 +13,8 @@ namespace PMQ.ErrorHandling.Filters;
 /// </summary>
 /// <remarks>
 /// <para>
-/// This filter is automatically registered when <see cref="ServiceCollectionExtensions.AddErrorHandling(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
-/// is called. It handles all unhandled exceptions in action methods and converts them into
+/// This filter is automatically registered via the AddErrorHandling extension method.
+/// It handles all unhandled exceptions in action methods and converts them into
 /// properly formatted <see cref="ErrorDetails"/> responses.
 /// </para>
 /// <para>

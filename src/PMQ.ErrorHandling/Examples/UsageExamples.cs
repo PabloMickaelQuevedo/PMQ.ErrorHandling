@@ -1,10 +1,3 @@
-/// <summary>
-/// Example usage scenarios for the PMQ.ErrorHandling package.
-/// </summary>
-/// <remarks>
-/// This file contains practical examples demonstrating how to use the error handling
-/// system in different scenarios and environments.
-/// </remarks>
 namespace PMQ.ErrorHandling.Examples
 {
     /*

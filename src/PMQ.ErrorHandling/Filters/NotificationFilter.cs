@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using PMQ.ErrorHandling.Constants;
 using PMQ.ErrorHandling.Helpers;
@@ -16,8 +16,8 @@ namespace PMQ.ErrorHandling.Filters
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This filter is automatically registered when <see cref="ServiceCollectionExtensions.AddErrorHandling(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
-    /// is called. It runs after action execution to check for any pending notifications
+    /// This filter is automatically registered via the AddErrorHandling extension method.
+    /// It runs after action execution to check for any pending notifications
     /// and converts them into appropriate HTTP status code responses.
     /// </para>
     /// <para>
