@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>PMQ.ErrorHandling</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Pablo Mickael Quevedo</Authors>
     <Company>Pablo Mickael Quevedo</Company>
     <Product>PMQ.ErrorHandling</Product>
