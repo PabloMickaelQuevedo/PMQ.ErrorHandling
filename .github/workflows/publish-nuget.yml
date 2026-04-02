@@ -57,5 +57,12 @@ jobs:
       - name: Pack
         run: dotnet pack --configuration Release --no-build --output ./nupkg
 
+      - name: Verify NuGet API Key
+        if: ${{ !secrets.PMQ_NUGET_KEY }}
+        run: |
+          echo "Error: PMQ_NUGET_KEY secret is not configured!"
+          echo "Please add the secret in Settings > Secrets and variables > Actions"
+          exit 1
+
       - name: Publish to NuGet
         run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.PMQ_NUGET_KEY }} --source https://api.nuget.org/v3/index.json
