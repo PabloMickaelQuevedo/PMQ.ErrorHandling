@@ -48,7 +48,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_WithValidationNotification_ShouldReturnErrorResultWith400Status()
         {
             // Arrange
-            var notification = new Notifications.Notification("Field is required", "Name", NotificationType.Validation);
+            var notification = new Notifications.Notification("Name", "Field is required", NotificationType.Validation);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 
@@ -74,7 +74,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_WithNotFoundNotification_ShouldReturnErrorResultWith404Status()
         {
             // Arrange
-            var notification = new Notifications.Notification("Resource not found", "Id", NotificationType.NotFound);
+            var notification = new Notifications.Notification("Id", "Resource not found", NotificationType.NotFound);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 
@@ -100,7 +100,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_WithAccessDeniedNotification_ShouldReturnErrorResultWith403Status()
         {
             // Arrange
-            var notification = new Notifications.Notification("Access denied", "Permission", NotificationType.AccessDenied);
+            var notification = new Notifications.Notification("Permission", "Access denied", NotificationType.AccessDenied);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 
@@ -126,7 +126,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_WithInconsistentStateNotification_ShouldReturnErrorResultWith409Status()
         {
             // Arrange
-            var notification = new Notifications.Notification("Inconsistent state", "Data", NotificationType.InconsistentState);
+            var notification = new Notifications.Notification("Data", "Inconsistent state", NotificationType.InconsistentState);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 
@@ -152,7 +152,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_WithBusinessRuleNotification_ShouldReturnErrorResultWith422Status()
         {
             // Arrange
-            var notification = new Notifications.Notification("Business rule violated", "Rule", NotificationType.BusinessRule);
+            var notification = new Notifications.Notification("Rule", "Business rule violated", NotificationType.BusinessRule);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 
@@ -180,8 +180,8 @@ namespace PMQ.ErrorHandling.Test.Filters
             // Arrange
             var notifications = new[]
             {
-                new Notifications.Notification("First", "Field1", NotificationType.Validation),
-                new Notifications.Notification("Second", "Field2", NotificationType.NotFound)
+                new Notifications.Notification("Field1", "First", NotificationType.Validation),
+                new Notifications.Notification("Field2", "Second", NotificationType.NotFound)
             };
 
             var mockContext = new Mock<INotificationContext>();
@@ -208,7 +208,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_ShouldIncludeErrorsInResponse()
         {
             // Arrange
-            var notification = new Notifications.Notification("Error message", "FieldName", NotificationType.Validation);
+            var notification = new Notifications.Notification("FieldName", "Error message", NotificationType.Validation);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 
@@ -236,7 +236,7 @@ namespace PMQ.ErrorHandling.Test.Filters
         public void OnActionExecuted_ShouldSetLocalizedTitle()
         {
             // Arrange
-            var notification = new Notifications.Notification("Error", "Field", NotificationType.NotFound);
+            var notification = new Notifications.Notification("Field", "Error", NotificationType.NotFound);
             var notifications = new[] { notification };
             var mockContext = new Mock<INotificationContext>();
 

@@ -23,7 +23,11 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          # O SDK 10 compila os dois targets; o runtime 8 é necessário para executar
+          # os testes compilados para net8.0.
+          dotnet-version: |
+            8.0.x
+            10.0.x
 
       - name: Restore dependencies
         run: dotnet restore
@@ -31,8 +35,8 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Run unit tests
-        run: dotnet test --configuration Release --no-build --verbosity normal --logger "console;verbosity=normal"
+      - name: Run tests
+        run: dotnet test --configuration Release --no-build --verbosity normal
 
   publish:
     name: Publish Package
@@ -46,24 +50,35 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
       - name: Restore dependencies
         run: dotnet restore
 
+      # A versão vem da tag em build e pack: assembly e pacote nunca divergem,
+      # e o <Version> do .csproj passa a ser apenas o padrão de desenvolvimento.
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore -p:Version=${{ steps.version.outputs.VERSION }}
 
       - name: Pack
-        run: dotnet pack --configuration Release --no-build --output ./nupkg
+        run: dotnet pack --configuration Release --no-build --output ./nupkg -p:Version=${{ steps.version.outputs.VERSION }}
 
-      - name: Verify NuGet API Key
+      - name: Verify NuGet API key
+        env:
+          NUGET_KEY: ${{ secrets.PMQ_NUGET_KEY }}
         run: |
-          if [ -z "${{ secrets.PMQ_NUGET_KEY }}" ]; then
-            echo "Error: PMQ_NUGET_KEY secret is not configured!"
-            echo "Please add the secret in Settings > Secrets and variables > Actions"
+          if [ -z "$NUGET_KEY" ]; then
+            echo "::error::PMQ_NUGET_KEY não está configurado (Settings > Secrets and variables > Actions)."
             exit 1
           fi
 
       - name: Publish to NuGet
-        run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.PMQ_NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+        env:
+          NUGET_KEY: ${{ secrets.PMQ_NUGET_KEY }}
+        run: dotnet nuget push ./nupkg/*.nupkg --api-key "$NUGET_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate

@@ -14,7 +14,9 @@ public static class NotificationMapper
     /// <returns>A collection of <see cref="ValidationError"/> objects.</returns>
     public static IEnumerable<ValidationError> ToValidationErrors(this IEnumerable<Notifications.Notification> notifications)
     {
-        return notifications.Select(n =>
-            new ValidationError(n.Key, n.Message));
+        return notifications.Select(notification =>
+            new ValidationError(
+                message: notification.Message,
+                field: string.IsNullOrWhiteSpace(notification.Key) ? null : notification.Key));
     }
 }

@@ -19,7 +19,8 @@ public class NotificationMapperTests
     public void ToValidationErrors_WithSingleNotification_ShouldReturnSingleValidationError()
     {
         // Arrange
-        var notification = new Notifications.Notification("Field is required", "Name");
+        // Notification(key, message): the key identifies the field, the message describes the failure.
+        var notification = new Notifications.Notification("Name", "Field is required");
         var notifications = new List<Notifications.Notification> { notification };
 
         // Act
@@ -37,9 +38,9 @@ public class NotificationMapperTests
         // Arrange
         var notifications = new List<Notifications.Notification>
         {
-            new("Error 1", "Field1"),
-            new("Error 2", "Field2"),
-            new("Error 3", "Field3")
+            new("Field1", "Error 1"),
+            new("Field2", "Error 2"),
+            new("Field3", "Error 3")
         };
 
         // Act
@@ -56,7 +57,7 @@ public class NotificationMapperTests
     public void ToValidationErrors_ShouldMapNotificationKeyToValidationErrorField()
     {
         // Arrange
-        var notification = new Notifications.Notification("Invalid value", "Username");
+        var notification = new Notifications.Notification("Username", "Invalid value");
         var notifications = new List<Notifications.Notification> { notification };
 
         // Act
@@ -71,7 +72,7 @@ public class NotificationMapperTests
     {
         // Arrange
         var errorMessage = "This field must be a valid email";
-        var notification = new Notifications.Notification(errorMessage, "Email");
+        var notification = new Notifications.Notification("Email", errorMessage);
         var notifications = new List<Notifications.Notification> { notification };
 
         // Act
@@ -82,10 +83,25 @@ public class NotificationMapperTests
     }
 
     [Fact]
+    public void ToValidationErrors_WithoutKey_ShouldLeaveFieldNull()
+    {
+        // Arrange
+        var notification = new Notifications.Notification("Something went wrong");
+        var notifications = new List<Notifications.Notification> { notification };
+
+        // Act
+        var result = notifications.ToValidationErrors().ToList();
+
+        // Assert
+        result[0].Message.ShouldBe("Something went wrong");
+        result[0].Field.ShouldBeNull();
+    }
+
+    [Fact]
     public void ToValidationErrors_ShouldNotSetCodeProperty()
     {
         // Arrange
-        var notification = new Notifications.Notification("Error message", "FieldName");
+        var notification = new Notifications.Notification("FieldName", "Error message");
         var notifications = new List<Notifications.Notification> { notification };
 
         // Act
@@ -101,9 +117,9 @@ public class NotificationMapperTests
         // Arrange
         var notifications = new List<Notifications.Notification>
         {
-            new("First error", "Field1"),
-            new("Second error", "Field2"),
-            new("Third error", "Field3")
+            new("Field1", "First error"),
+            new("Field2", "Second error"),
+            new("Field3", "Third error")
         };
 
         // Act
