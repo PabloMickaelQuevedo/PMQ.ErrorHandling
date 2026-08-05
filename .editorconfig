@@ -1,0 +1,24 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{json,yml,yaml,xml,csproj,props,targets,slnx}]
+indent_size = 2
+
+[*.cs]
+dotnet_sort_system_directives_first = true
+
+#### Analisadores ####
+# CA1716: IErrorLocalizer.Get conflita com palavra reservada do VB. Renomear quebraria todos os
+# consumidores em troca de interoperabilidade com uma linguagem que o pacote não tem por alvo.
+dotnet_diagnostic.CA1716.severity = none
+
+[tests/**/*.cs]
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA2007.severity = none

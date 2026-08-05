@@ -62,7 +62,9 @@ namespace PMQ.ErrorHandling.Localization
             }
 
             // Get message based on configured culture
-            return _options.Culture?.StartsWith("pt") ?? false
+            // Ordinal: a culture tag is an identifier, not user-facing text. A culture-sensitive
+            // comparison here would make the result depend on the thread's current culture.
+            return _options.Culture?.StartsWith("pt", StringComparison.OrdinalIgnoreCase) ?? false
                 ? GetPortugueseBRMessage(key)
                 : GetEnglishMessage(key);
         }
