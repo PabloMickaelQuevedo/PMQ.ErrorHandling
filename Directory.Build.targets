@@ -1,0 +1,22 @@
+<Project>
+
+  <!--
+    Embute o README na raiz do .nupkg, para que a página do pacote no NuGet mostre a
+    documentação em vez de "no readme".
+
+    Fica em Directory.Build.targets, e não em Directory.Build.props, porque o caminho do
+    README precisa ser resolvido a partir da raiz do repositório e não da pasta do projeto.
+
+    Sem condição de propósito: IsPackable só recebe seu valor padrão nos targets do NuGet,
+    importados depois deste arquivo, então condicionar aqui silenciosamente não pegaria.
+    Projetos de teste não são afetados porque IsPackable=false impede o pack de rodar.
+  -->
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+</Project>
