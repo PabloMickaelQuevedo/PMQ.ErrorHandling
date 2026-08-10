@@ -5,8 +5,14 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
 
+  <!--
+    Os pacotes PMQ são liberados juntos e testados como um conjunto, então a política é
+    declarar a versão corrente de cada um em vez do mínimo teórico. Sem isso, quem
+    instalasse só este pacote receberia a 1.0.7, em que Validatable ainda está no
+    namespace antigo.
+  -->
   <ItemGroup>
-    <PackageVersion Include="PMQ.Notifications" Version="1.0.7" />
+    <PackageVersion Include="PMQ.Notifications" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup Label="Testes">
