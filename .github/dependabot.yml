@@ -1,0 +1,38 @@
+version: 2
+
+# Com NuGetAudit em all/low, uma CVE nova passa a quebrar o build — mas só no dia em que
+# alguém for compilar. O dependabot antecipa isso como pull request.
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    target-branch: master
+    commit-message:
+      prefix: "⬆️ -"
+    groups:
+      # Os pacotes da Microsoft saem em lote a cada patch do .NET; agrupar evita
+      # uma enxurrada de PRs quase idênticos toda semana.
+      microsoft:
+        patterns:
+          - "Microsoft.*"
+          - "System.*"
+      testing:
+        patterns:
+          - "xunit*"
+          - "coverlet*"
+          - "Shouldly"
+          - "Moq*"
+          - "NSubstitute"
+          - "FluentAssertions"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    target-branch: master
+    commit-message:
+      prefix: "⬆️ -"
