@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using PMQ.ErrorHandling.Constants;
 using PMQ.ErrorHandling.Filters;
+using PMQ.ErrorHandling.Helpers;
 using PMQ.ErrorHandling.Interfaces;
 using PMQ.ErrorHandling.Localization;
 using PMQ.ErrorHandling.Mappers;
@@ -109,11 +110,18 @@ public static class ServiceCollectionExtensions
             {
                 var errors = context.ModelState.ToValidationErrors();
 
+                // O localizer e o trace são resolvidos do escopo da requisição, como nos
+                // filtros. Antes esta era a única via que devolvia a chave crua no Title
+                // ("ValidationError") e deixava o TraceId nulo, enquanto ExceptionFilter e
+                // NotificationFilter devolviam o título traduzido e o trace preenchido.
+                var localizer = context.HttpContext.RequestServices.GetRequiredService<IErrorLocalizer>();
+
                 var error = new ErrorDetails
                 {
-                    Title = ErrorMessageKeys.ValidationError,
+                    Title = localizer.Get(ErrorMessageKeys.ValidationError),
                     Status = StatusCodes.Status400BadRequest,
-                    Errors = errors
+                    Errors = errors,
+                    TraceId = TraceHelper.GetTraceId(context.HttpContext)
                 };
 
                 return new Results.ErrorResult(error);
