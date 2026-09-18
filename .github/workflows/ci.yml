@@ -35,6 +35,12 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
+      # O pack é o que faz o PackageValidation rodar: ele compara a API deste build
+      # com a do pacote publicado. Sem este passo a checagem só aconteceria na
+      # release, quando já é tarde.
+      - name: Pack e valida compatibilidade de API
+        run: dotnet pack --configuration Release --no-build -o ./nupkg
+
       # Microsoft.Testing.Platform, não VSTest: o opt-in fica no global.json e os
       # argumentos do runner vão depois do --. A sintaxe antiga (--collect:"XPlat Code
       # Coverage") não coleta nada aqui e o run termina com "Zero testes executados".
