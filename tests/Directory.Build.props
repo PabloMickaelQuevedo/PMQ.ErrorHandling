@@ -5,6 +5,8 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- xUnit v3 compila projetos de teste como executáveis (Microsoft.Testing.Platform). -->
+    <OutputType>Exe</OutputType>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <!--
       Código de teste não é distribuído: as regras de design de API pública só geram ruído em fixtures.

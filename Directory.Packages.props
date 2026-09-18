@@ -19,9 +19,14 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.0" />
     <PackageVersion Include="Moq.AutoMock" Version="4.0.3" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
-    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.v3" Version="4.0.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
+    <!--
+      Cobertura pelo Microsoft.Testing.Platform. O coverlet.collector é data collector
+      do VSTest e não roda neste caminho: no xunit.v3 o MTP não suporta mais a ponte
+      VSTest no SDK 10.
+    -->
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
   </ItemGroup>
 
 </Project>
