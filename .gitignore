@@ -147,6 +147,9 @@ coverage*.json
 coverage*.xml
 coverage*.info
 
+# Pasta de resultados do dotnet test (--results-directory ./coverage, igual ao CI)
+coverage/
+
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
