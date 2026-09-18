@@ -12,6 +12,21 @@
     <PackageTags>error-handling;exception-handling;filters;validation;aspnetcore;notifications</PackageTags>
     <IncludeLicenseFile>true</IncludeLicenseFile>
   </PropertyGroup>
+  <!--
+    Compara a API deste build com a do pacote já publicado, baixado do NuGet, e por
+    target framework. Remover membro público reprova o pack com CP0002.
+
+    O baseline é a última versão publicada e sobe junto com o release. Quebra
+    intencional se registra com -p:ApiCompatGenerateSuppressionFile=true, commitando
+    o arquivo gerado — a decisão fica explícita e revisável em vez de silenciosa.
+
+    Compara assinatura, não piso de dependência: subir o grupo net8.0 para um pacote
+    10.x continua sendo trabalho do guard em Directory.Build.targets.
+  -->
+  <PropertyGroup Label="Compatibilidade">
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion>1.1.4</PackageValidationBaselineVersion>
+  </PropertyGroup>
 
   <ItemGroup>
     <!--

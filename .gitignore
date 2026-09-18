@@ -150,6 +150,9 @@ coverage*.info
 # Pasta de resultados do dotnet test (--results-directory ./coverage, igual ao CI)
 coverage/
 
+# Saída do dotnet pack (-o ./nupkg, igual ao CI)
+nupkg/
+
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
