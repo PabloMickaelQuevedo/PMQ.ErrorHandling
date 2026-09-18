@@ -12,7 +12,7 @@
     namespace antigo.
   -->
   <ItemGroup>
-    <PackageVersion Include="PMQ.Notifications" Version="1.1.1" />
+    <PackageVersion Include="PMQ.Notifications" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup Label="Testes">
