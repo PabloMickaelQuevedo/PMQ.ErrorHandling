@@ -14,6 +14,14 @@ exception stays visible to logs, metrics and tracing.
 - 🔒 **Safe by default** - Exception messages are never sent to clients unless you opt in
 - 📍 **Trace ID** - Every error response carries the current trace id to correlate with logs
 
+## Target Frameworks
+
+This package targets `net8.0` and `net10.0`.
+
+> **.NET 8 reaches end of support on 2026-11-10.** Version 2.0, released after that date, will
+> target `net10.0` only. Applications that stay on .NET 8 can keep using 1.x, which will receive
+> security fixes only, for six months after 2.0 is released.
+
 ## Installation
 
 ```bash
