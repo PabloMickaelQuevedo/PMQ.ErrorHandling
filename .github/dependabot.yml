@@ -12,6 +12,17 @@ updates:
     target-branch: master
     commit-message:
       prefix: "⬆️ -"
+    # Pacotes que acompanham o runtime ficam na linha LTS do TFM: major nunca é proposto.
+    # Evita dois erros que o dependabot comete sozinho — reescrever o grupo net8.0 com a
+    # versão do net10 (ele não avalia Condition de MSBuild) e oferecer a próxima major
+    # STS, como o .NET 11. Patch dentro da linha continua chegando normalmente.
+    ignore:
+      - dependency-name: "Microsoft.Extensions.*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "Microsoft.AspNetCore.*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "Microsoft.EntityFrameworkCore*"
+        update-types: ["version-update:semver-major"]
     groups:
       # Os pacotes da Microsoft saem em lote a cada patch do .NET; agrupar evita
       # uma enxurrada de PRs quase idênticos toda semana.
