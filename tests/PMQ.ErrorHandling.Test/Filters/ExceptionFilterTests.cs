@@ -102,9 +102,9 @@ namespace PMQ.ErrorHandling.Test.Filters
             filter.OnException(exceptionContext);
 
             // Assert
-            var errorResult = exceptionContext.Result as ErrorResult;
-            var errorDetails = errorResult?.Value as ErrorDetails;
-            errorDetails?.Detail.ShouldBe(exceptionMessage);
+            var errorResult = exceptionContext.Result.ShouldBeOfType<ErrorResult>();
+            var errorDetails = errorResult.Value.ShouldBeOfType<ErrorDetails>();
+            errorDetails.Detail.ShouldBe(exceptionMessage);
         }
 
         [Fact]
@@ -130,9 +130,35 @@ namespace PMQ.ErrorHandling.Test.Filters
             filter.OnException(exceptionContext);
 
             // Assert
-            var errorResult = exceptionContext.Result as ErrorResult;
-            var errorDetails = errorResult?.Value as ErrorDetails;
-            errorDetails?.Detail.ShouldBeNull();
+            var errorResult = exceptionContext.Result.ShouldBeOfType<ErrorResult>();
+            var errorDetails = errorResult.Value.ShouldBeOfType<ErrorDetails>();
+            errorDetails.Detail.ShouldBeNull();
+        }
+
+        [Fact]
+        public void OnException_WithDefaultRegistration_ShouldNotExposeExceptionMessage()
+        {
+            // Arrange — the filter exactly as AddErrorHandling() wires it, with no options set.
+            var services = new ServiceCollection();
+            services.AddErrorHandling();
+            using var provider = services.BuildServiceProvider();
+            using var scope = provider.CreateScope();
+            var filter = scope.ServiceProvider.GetRequiredService<ExceptionFilter>();
+
+            var exceptionContext = new ExceptionContext(
+                new ActionContext(new DefaultHttpContext(), new RouteData(), new ControllerActionDescriptor()),
+                [])
+            {
+                Exception = new InvalidOperationException("Server=db;Password=secret")
+            };
+
+            // Act
+            filter.OnException(exceptionContext);
+
+            // Assert
+            var errorResult = exceptionContext.Result.ShouldBeOfType<ErrorResult>();
+            var errorDetails = errorResult.Value.ShouldBeOfType<ErrorDetails>();
+            errorDetails.Detail.ShouldBeNull();
         }
 
         [Fact]

@@ -33,9 +33,8 @@ builder.Services.AddErrorHandling();
 // Or with custom options
 builder.Services.AddErrorHandling(options =>
 {
-    options.Culture = new CultureInfo("pt-BR");
-    options.IncludeExceptionDetails = app.Environment.IsDevelopment();
-    options.IncludeTraceId = true;
+    options.Culture = "pt-BR";
+    options.IncludeExceptionDetails = builder.Environment.IsDevelopment();
     options.CustomMessages["custom_key"] = "Your custom message";
 });
 
@@ -77,19 +76,21 @@ public class ProductsController : ControllerBase
 builder.Services.AddErrorHandling(options =>
 {
     // Set the culture for localized messages (default: en-US)
-    options.Culture = new CultureInfo("pt-BR");
-    
-    // Include exception details in responses (only for development!)
-    options.IncludeExceptionDetails = app.Environment.IsDevelopment();
-    
-    // Include trace ID in error responses
-    options.IncludeTraceId = true;
-    
+    options.Culture = "pt-BR";
+
+    // Include the exception message in responses (default: false — development only!)
+    options.IncludeExceptionDetails = builder.Environment.IsDevelopment();
+
     // Add custom error messages
     options.CustomMessages.Add("custom_validation_error", "This is a custom error");
     options.CustomMessages.Add("business_rule_violation", "Business rule was violated");
 });
 ```
+
+> **Since 1.1.5, `IncludeExceptionDetails` defaults to `false`.** Up to 1.1.4 it defaulted to
+> `true`, so any application that did not set it returned exception messages — which routinely
+> carry connection strings, SQL and file paths — in production responses. If you relied on
+> seeing them while developing, set it explicitly as shown above.
 
 ## Supported Notification Types
 
@@ -256,7 +257,7 @@ public static class SpanishErrorMessages
 // Register in Program.cs
 builder.Services.AddErrorHandling(options =>
 {
-    options.Culture = new CultureInfo("es-ES");
+    options.Culture = "es-ES";
     // Add Spanish messages
     options.CustomMessages["ValidationError"] = SpanishErrorMessages.ValidationError;
     options.CustomMessages["NotFound"] = SpanishErrorMessages.NotFound;
@@ -271,7 +272,7 @@ The library automatically generates and includes trace IDs in error responses:
 // The TraceHelper retrieves the current Activity ID or falls back to HttpContext.TraceIdentifier
 var traceId = TraceHelper.GetTraceId(httpContext);
 
-// This is automatically set in error responses when IncludeTraceId = true
+// It is always set in error responses. The IncludeTraceId option currently has no effect.
 ```
 
 This helps with:
