@@ -45,6 +45,24 @@
         /// Used when a business rule validation fails (422).
         /// </summary>
         public const string BusinessRule = "BusinessRule";
+
+        /// <summary>
+        /// Key for unauthorized error message.
+        /// Used when the request lacks valid authentication (401).
+        /// </summary>
+        public const string Unauthorized = "Unauthorized";
+
+        /// <summary>
+        /// Key for method not allowed error message.
+        /// Used when the route exists but not for the HTTP method (405).
+        /// </summary>
+        public const string MethodNotAllowed = "MethodNotAllowed";
+
+        /// <summary>
+        /// Key for too many requests error message.
+        /// Used when a rate limiter rejects the request (429).
+        /// </summary>
+        public const string TooManyRequests = "TooManyRequests";
     }
 
     /// <summary>
@@ -85,6 +103,21 @@
         /// Default message for business rule errors.
         /// </summary>
         public const string BusinessRule = "A business rule validation failed.";
+
+        /// <summary>
+        /// Default message for unauthorized errors.
+        /// </summary>
+        public const string Unauthorized = "Authentication is required.";
+
+        /// <summary>
+        /// Default message for method not allowed errors.
+        /// </summary>
+        public const string MethodNotAllowed = "Method not allowed for this resource.";
+
+        /// <summary>
+        /// Default message for too many requests errors.
+        /// </summary>
+        public const string TooManyRequests = "Too many requests. Try again later.";
     }
 
     /// <summary>
@@ -125,5 +158,20 @@
         /// Portuguese (Brazil) message for business rule errors.
         /// </summary>
         public const string BusinessRule = "Uma validação de regra de negócio falhou.";
+
+        /// <summary>
+        /// Portuguese (Brazil) message for unauthorized errors.
+        /// </summary>
+        public const string Unauthorized = "Autenticação necessária.";
+
+        /// <summary>
+        /// Portuguese (Brazil) message for method not allowed errors.
+        /// </summary>
+        public const string MethodNotAllowed = "Método não permitido para este recurso.";
+
+        /// <summary>
+        /// Portuguese (Brazil) message for too many requests errors.
+        /// </summary>
+        public const string TooManyRequests = "Muitas requisições. Tente novamente mais tarde.";
     }
 }

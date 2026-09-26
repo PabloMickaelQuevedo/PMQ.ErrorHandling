@@ -84,6 +84,9 @@ namespace PMQ.ErrorHandling.Localization
                 ErrorMessageKeys.AccessDenied => DefaultErrorMessages.AccessDenied,
                 ErrorMessageKeys.InconsistentState => DefaultErrorMessages.InconsistentState,
                 ErrorMessageKeys.BusinessRule => DefaultErrorMessages.BusinessRule,
+                ErrorMessageKeys.Unauthorized => DefaultErrorMessages.Unauthorized,
+                ErrorMessageKeys.MethodNotAllowed => DefaultErrorMessages.MethodNotAllowed,
+                ErrorMessageKeys.TooManyRequests => DefaultErrorMessages.TooManyRequests,
                 _ => key
             };
         }
@@ -104,6 +107,9 @@ namespace PMQ.ErrorHandling.Localization
                 ErrorMessageKeys.AccessDenied => PortugueseBRErrorMessages.AccessDenied,
                 ErrorMessageKeys.InconsistentState => PortugueseBRErrorMessages.InconsistentState,
                 ErrorMessageKeys.BusinessRule => PortugueseBRErrorMessages.BusinessRule,
+                ErrorMessageKeys.Unauthorized => PortugueseBRErrorMessages.Unauthorized,
+                ErrorMessageKeys.MethodNotAllowed => PortugueseBRErrorMessages.MethodNotAllowed,
+                ErrorMessageKeys.TooManyRequests => PortugueseBRErrorMessages.TooManyRequests,
                 _ => GetEnglishMessage(key)
             };
         }

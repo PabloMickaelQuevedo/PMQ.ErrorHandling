@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using PMQ.ErrorHandling.Constants;
 using PMQ.ErrorHandling.Filters;
 using PMQ.ErrorHandling.Helpers;
 using PMQ.ErrorHandling.Interfaces;
+using PMQ.ErrorHandling.Internal;
 using PMQ.ErrorHandling.Localization;
 using PMQ.ErrorHandling.Mappers;
 using PMQ.ErrorHandling.Models;
@@ -94,15 +97,33 @@ public static class ServiceCollectionExtensions
                 new Notifications.NotificationContext());
         }
 
-        // Register filters
+        // Register filters. ExceptionFilter stays resolvable for applications that add it
+        // explicitly, but is no longer part of the pipeline: see ExceptionHandlerStartupFilter.
         services.AddScoped<ExceptionFilter>();
         services.AddScoped<NotificationFilter>();
 
         services.Configure<MvcOptions>(options =>
         {
-            options.Filters.Add<ExceptionFilter>();
             options.Filters.Add<NotificationFilter>();
         });
+
+        // One writer and one shape for every error response. PostConfigure so that it wraps
+        // whatever the application configured: ours runs first, the application's can still
+        // override any member.
+        services.AddProblemDetails();
+        services.PostConfigure<ProblemDetailsOptions>(options =>
+        {
+            var applicationCustomization = options.CustomizeProblemDetails;
+            options.CustomizeProblemDetails = context =>
+            {
+                ErrorContract.Customize(context);
+                applicationCustomization?.Invoke(context);
+            };
+        });
+
+        // Unexpected exceptions go to ASP.NET Core's exception handler middleware, which logs,
+        // records metrics and emits the diagnostic events tracing depends on.
+        services.TryAddEnumerable(ServiceDescriptor.Transient<IStartupFilter, ExceptionHandlerStartupFilter>());
 
         services.Configure<ApiBehaviorOptions>(options =>
         {
