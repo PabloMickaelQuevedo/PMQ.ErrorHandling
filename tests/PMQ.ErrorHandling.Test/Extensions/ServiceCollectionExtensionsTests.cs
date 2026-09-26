@@ -159,7 +159,7 @@ public class ServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void AddErrorHandling_DefaultOptions_ShouldIncludeExceptionDetails()
+    public void AddErrorHandling_DefaultOptions_ShouldNotIncludeExceptionDetails()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -170,7 +170,7 @@ public class ServiceCollectionExtensionsTests
 
         // Assert
         var optionsSnapshot = serviceProvider.GetRequiredService<IOptionsMonitor<ErrorHandlingOptions>>();
-        optionsSnapshot.CurrentValue.IncludeExceptionDetails.ShouldBeTrue();
+        optionsSnapshot.CurrentValue.IncludeExceptionDetails.ShouldBeFalse();
     }
 
     [Fact]

@@ -9,7 +9,7 @@ public class ErrorHandlingOptionsTests
         var options = new ErrorHandlingOptions();
 
         // Assert
-        options.IncludeExceptionDetails.ShouldBeTrue();
+        options.IncludeExceptionDetails.ShouldBeFalse();
         options.IncludeTraceId.ShouldBeTrue();
         options.Culture.ShouldBe("en-US");
         options.CustomMessages.ShouldNotBeNull();

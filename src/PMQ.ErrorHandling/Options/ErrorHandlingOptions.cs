@@ -15,14 +15,21 @@ namespace PMQ.ErrorHandling.Options
         /// </summary>
         /// <value>
         /// <c>true</c> to include exception details; otherwise <c>false</c>.
-        /// Default is <c>true</c>.
+        /// Default is <c>false</c>.
         /// </value>
         /// <remarks>
-        /// When set to <c>true</c>, the exception message will be included in the
-        /// error response's Detail property. This is useful for development but should
-        /// be disabled in production to avoid exposing sensitive information.
+        /// <para>
+        /// When set to <c>true</c>, the exception message is copied into the error response's
+        /// Detail property. Exception messages routinely carry connection strings, SQL, file
+        /// paths and internal identifiers, so this is opt-in: turn it on for development only,
+        /// typically with <c>builder.Environment.IsDevelopment()</c>.
+        /// </para>
+        /// <para>
+        /// Up to 1.1.4 the default was <c>true</c>, which exposed exception messages in
+        /// production for any application that did not set this explicitly.
+        /// </para>
         /// </remarks>
-        public bool IncludeExceptionDetails { get; set; } = true;
+        public bool IncludeExceptionDetails { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to include the trace ID 
