@@ -29,4 +29,16 @@
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
   </ItemGroup>
 
+  <!--
+    TestHost acompanha o runtime, então segue a mesma regra dos pacotes de runtime:
+    cada target pede a versão da sua própria linha LTS.
+  -->
+  <ItemGroup Label="Testes (net8.0)" Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.31" />
+  </ItemGroup>
+
+  <ItemGroup Label="Testes (net10.0)" Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="10.0.12" />
+  </ItemGroup>
+
 </Project>

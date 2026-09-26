@@ -13,9 +13,17 @@ namespace PMQ.ErrorHandling.Filters;
 /// </summary>
 /// <remarks>
 /// <para>
-/// This filter is automatically registered via the AddErrorHandling extension method.
-/// It handles all unhandled exceptions in action methods and converts them into
-/// properly formatted <see cref="ErrorDetails"/> responses.
+/// <b>Since 1.2.0 this filter is no longer registered by <c>AddErrorHandling</c>.</b> Unexpected
+/// exceptions go to ASP.NET Core's exception handler middleware instead, which covers the whole
+/// pipeline rather than only action methods, and which logs them, records the
+/// <c>aspnetcore.diagnostics.exceptions</c> metric and emits the diagnostic events tracing relies
+/// on. A filter that handles the exception suppresses all three: with this filter in place, a 500
+/// from a controller left no trace in logs, metrics or traces. The response body is produced by
+/// the same error contract as every other error.
+/// </para>
+/// <para>
+/// The type is kept so that applications referencing it keep compiling. Adding it back to the MVC
+/// filters brings back the silent behavior described above.
 /// </para>
 /// <para>
 /// Exception details are only included in the response when <see cref="ErrorHandlingOptions.IncludeExceptionDetails"/>

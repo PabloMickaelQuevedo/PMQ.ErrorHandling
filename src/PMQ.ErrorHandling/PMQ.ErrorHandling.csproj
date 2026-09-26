@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>PMQ.ErrorHandling</PackageId>
-    <Version>1.1.5</Version>
+    <Version>1.2.0</Version>
     <Product>PMQ.ErrorHandling</Product>
     <Description>
       A comprehensive error handling library for .NET applications, providing exception filters, notification mapping, model state validation, and centralized error response formatting for ASP.NET Core projects.
@@ -25,7 +25,7 @@
   -->
   <PropertyGroup Label="Compatibilidade">
     <EnablePackageValidation>true</EnablePackageValidation>
-    <PackageValidationBaselineVersion>1.1.4</PackageValidationBaselineVersion>
+    <PackageValidationBaselineVersion>1.1.5</PackageValidationBaselineVersion>
   </PropertyGroup>
 
   <ItemGroup>
