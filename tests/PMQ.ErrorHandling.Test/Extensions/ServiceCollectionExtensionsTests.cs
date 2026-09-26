@@ -19,6 +19,36 @@ public class ServiceCollectionExtensionsTests
     }
 
     [Fact]
+    public void AddErrorHandling_ShouldNotAddExceptionFilterToMvcPipeline()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+
+        // Act
+        services.AddErrorHandling();
+        var mvcOptions = services.BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value;
+
+        // Assert — unexpected exceptions belong to the exception handler middleware, which logs
+        // and records them. An exception filter that handles them suppresses all of that.
+        var filterTypes = mvcOptions.Filters.OfType<TypeFilterAttribute>().Select(f => f.ImplementationType).ToList();
+        filterTypes.ShouldContain(typeof(NotificationFilter));
+        filterTypes.ShouldNotContain(typeof(ExceptionFilter));
+    }
+
+    [Fact]
+    public void AddErrorHandling_ShouldRegisterExceptionHandlerMiddlewareThroughStartupFilter()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+
+        // Act
+        services.AddErrorHandling();
+
+        // Assert
+        services.ShouldContain(d => d.ServiceType == typeof(Microsoft.AspNetCore.Hosting.IStartupFilter));
+    }
+
+    [Fact]
     public void AddErrorHandling_WithoutOptions_ShouldRegisterErrorLocalizerAsScopedService()
     {
         // Arrange

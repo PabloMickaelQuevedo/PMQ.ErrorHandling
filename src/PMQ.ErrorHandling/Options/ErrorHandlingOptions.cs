@@ -40,7 +40,15 @@ namespace PMQ.ErrorHandling.Options
         /// Default is <c>true</c>.
         /// </value>
         /// <remarks>
-        /// The trace ID helps correlate errors with application logs for debugging.
+        /// <para>
+        /// The trace ID helps correlate errors with application logs for debugging. It comes from
+        /// the current trace — <c>Activity.Current</c>, falling back to the request's trace
+        /// identifier — on every error response: exceptions, notifications, invalid model state
+        /// and status code pages.
+        /// </para>
+        /// <para>
+        /// Up to 1.1.x this option was not read anywhere and the trace ID was always included.
+        /// </para>
         /// </remarks>
         public bool IncludeTraceId { get; set; } = true;
 

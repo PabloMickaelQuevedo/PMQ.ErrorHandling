@@ -17,7 +17,7 @@ namespace PMQ.ErrorHandling.Internal;
 /// <para>
 /// <see cref="ErrorDetails"/> stays the public, typed model: it is what the API documents and what
 /// clients deserialize into. This type only exists between <see cref="Results.ErrorResult"/> and
-/// the writer, and it also tells <see cref="ErrorContract"/> that the title was already chosen.
+/// the writer.
 /// </para>
 /// </remarks>
 internal sealed class ContractProblemDetails : ProblemDetails
@@ -43,9 +43,9 @@ internal sealed class ContractProblemDetails : ProblemDetails
         if (details.Errors is not null)
             wire.Extensions[ErrorsKey] = details.Errors.ToArray();
 
-        if (details.TraceId is not null)
-            wire.Extensions[TraceIdKey] = details.TraceId;
-
+        // TraceId is deliberately not carried. MVC's writer copies these extensions onto its own
+        // problem details *after* the customization ran, so anything placed here would override
+        // ErrorContract — including IncludeTraceId = false. The trace id is ErrorContract's alone.
         return wire;
     }
 }

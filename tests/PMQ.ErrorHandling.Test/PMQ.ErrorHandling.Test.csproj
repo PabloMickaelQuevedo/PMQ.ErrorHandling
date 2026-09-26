@@ -11,6 +11,7 @@
     <PackageReference Include="Moq.AutoMock" />
     <PackageReference Include="Shouldly" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" />
   </ItemGroup>
 
   <ItemGroup>

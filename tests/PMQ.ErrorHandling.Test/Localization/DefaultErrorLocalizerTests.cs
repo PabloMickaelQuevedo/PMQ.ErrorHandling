@@ -18,6 +18,25 @@ public class DefaultErrorLocalizerTests
         Should.Throw<ArgumentNullException>(() => new DefaultErrorLocalizer(null!));
     }
 
+    [Theory]
+    [InlineData(ErrorMessageKeys.Unauthorized, "en-US", DefaultErrorMessages.Unauthorized)]
+    [InlineData(ErrorMessageKeys.MethodNotAllowed, "en-US", DefaultErrorMessages.MethodNotAllowed)]
+    [InlineData(ErrorMessageKeys.TooManyRequests, "en-US", DefaultErrorMessages.TooManyRequests)]
+    [InlineData(ErrorMessageKeys.Unauthorized, "pt-BR", PortugueseBRErrorMessages.Unauthorized)]
+    [InlineData(ErrorMessageKeys.MethodNotAllowed, "pt-BR", PortugueseBRErrorMessages.MethodNotAllowed)]
+    [InlineData(ErrorMessageKeys.TooManyRequests, "pt-BR", PortugueseBRErrorMessages.TooManyRequests)]
+    public void Get_WithPipelineStatusKeys_ShouldReturnLocalizedMessage(string key, string culture, string expected)
+    {
+        // Arrange
+        var localizer = CreateLocalizer(new ErrorHandlingOptions { Culture = culture });
+
+        // Act
+        var result = localizer.Get(key);
+
+        // Assert
+        result.ShouldBe(expected);
+    }
+
     [Fact]
     public void Get_WithInternalServerErrorKey_EnglishCulture_ShouldReturnEnglishMessage()
     {

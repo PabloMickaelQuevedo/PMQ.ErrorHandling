@@ -29,6 +29,12 @@ internal static class ErrorContract
 {
     private const string TraceIdKey = ContractProblemDetails.TraceIdKey;
 
+    /// <summary>
+    /// <see cref="Microsoft.AspNetCore.Http.HttpContext.Items"/> key set by
+    /// <see cref="Results.ErrorResult"/> while it writes, meaning the title must be kept.
+    /// </summary>
+    internal static readonly object TitleIsFinalKey = new();
+
     private static readonly Dictionary<int, string> TitleKeys = new()
     {
         [StatusCodes.Status400BadRequest] = ErrorMessageKeys.ValidationError,
@@ -51,7 +57,10 @@ internal static class ErrorContract
 
         // An ErrorResult arrives with a title chosen by whoever built it — a notification type,
         // invalid model state, ErrorResult.From. Only the framework's generic titles are replaced.
-        if (problem is not ContractProblemDetails)
+        //
+        // The mark lives on the request, not on the object: MVC's writer does not customize the
+        // problem details it receives, it creates new ones and customizes those.
+        if (!httpContext.Items.ContainsKey(TitleIsFinalKey))
             LocalizeTitle(problem, httpContext, services);
 
         // Unexpected exceptions are programming errors: their message is never part of the

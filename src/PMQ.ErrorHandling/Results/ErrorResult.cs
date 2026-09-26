@@ -63,14 +63,22 @@ namespace PMQ.ErrorHandling.Results
 
                 // Written in its wire form: the framework's writers serialize by the base type
                 // and would drop the members declared on ErrorDetails. See ContractProblemDetails.
-                var written = await problemDetails.TryWriteAsync(new ProblemDetailsContext
+                httpContext.Items[ErrorContract.TitleIsFinalKey] = true;
+                try
                 {
-                    HttpContext = httpContext,
-                    ProblemDetails = ContractProblemDetails.From(details),
-                }).ConfigureAwait(false);
+                    var written = await problemDetails.TryWriteAsync(new ProblemDetailsContext
+                    {
+                        HttpContext = httpContext,
+                        ProblemDetails = ContractProblemDetails.From(details),
+                    }).ConfigureAwait(false);
 
-                if (written)
-                    return;
+                    if (written)
+                        return;
+                }
+                finally
+                {
+                    httpContext.Items.Remove(ErrorContract.TitleIsFinalKey);
+                }
             }
 
             await base.ExecuteResultAsync(context).ConfigureAwait(false);

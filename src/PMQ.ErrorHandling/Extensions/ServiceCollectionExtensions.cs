@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,9 +30,10 @@ public static class ServiceCollectionExtensions
     /// This method registers:
     /// <list type="bullet">
     /// <item><description><see cref="IErrorLocalizer"/> - For localizing error messages</description></item>
-    /// <item><description><see cref="ExceptionFilter"/> - For handling unhandled exceptions</description></item>
     /// <item><description><see cref="NotificationFilter"/> - For handling notifications from PMQ.Notifications</description></item>
     /// <item><description>Invalid model state response factory - For formatting validation errors</description></item>
+    /// <item><description>Problem details customization - One shape, localized title and trace id for every error response</description></item>
+    /// <item><description>The exception handler middleware, through an <c>IStartupFilter</c> - For unexpected exceptions anywhere in the pipeline, with logs, metrics and tracing</description></item>
     /// </list>
     /// </para>
     /// <para>
