@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup Label="Testes">
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageVersion Include="Moq.AutoMock" Version="4.0.3" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
     <PackageVersion Include="xunit.v3" Version="4.0.1" />
@@ -26,7 +26,7 @@
       do VSTest e não roda neste caminho: no xunit.v3 o MTP não suporta mais a ponte
       VSTest no SDK 10.
     -->
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.12.0" />
   </ItemGroup>
 
   <!--
@@ -34,7 +34,7 @@
     cada target pede a versão da sua própria linha LTS.
   -->
   <ItemGroup Label="Testes (net8.0)" Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.31" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="8.0.32" />
   </ItemGroup>
 
   <ItemGroup Label="Testes (net10.0)" Condition="'$(TargetFramework)' == 'net10.0'">
